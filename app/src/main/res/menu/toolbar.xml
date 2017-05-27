@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mu_main_about"
+        android:title="关于"/>
+    <item
+        android:id="@+id/mu_main_update"
+        android:title="设置服务器" />
+    <item
+        android:id="@+id/mu_main_exit"
+        android:title="退出"/>
+</menu>
