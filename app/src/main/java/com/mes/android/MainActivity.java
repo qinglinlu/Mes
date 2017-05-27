@@ -155,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
             if (success.indexOf("{") != -1) {
                 //i添加在历史帐号信息
                 try {
+                    Log.d("MainActivity",success);
+
 //                    JSONArray jsonArray = new JSONArray(success);
 //                    JSONObject jsonObject = jsonArray.getJSONObject(0);//
 //                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
