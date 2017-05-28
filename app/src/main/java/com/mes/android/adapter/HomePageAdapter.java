@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mes.android.R;
+import com.mes.android.gson.HomeData;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHolder> {
     private Context mContext;
-    private List<String> mHome;
+    private List<HomeData> mHome;
     public class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         TextView biaotiText;
@@ -33,7 +34,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
             shujuText=(TextView)view.findViewById(R.id.tv_home_item_shuju);
         }
     }
-    public HomePageAdapter(List<String> parhome){
+    public HomePageAdapter(List<HomeData> parhome){
         mHome=parhome;
     }
     @Override
@@ -47,8 +48,17 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String home=mHome.get(position);
-        holder.biaotiText.setText(home);
+        String leixin="";
+        String shuju="";
+        holder.biaotiText.setText(mHome.get(position).mc);
+        if(mHome.get(position).qx.size()>0){
+            for(HomeData.myqx qx:mHome.get(position).qx){
+                leixin+=qx.name+"\n";
+                shuju+=qx.sl+"\n";
+            }
+        }
+        holder.neirongText.setText(leixin);
+        holder.shujuText.setText(shuju);
     }
 
     @Override

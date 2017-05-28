@@ -21,18 +21,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mes.android.adapter.MainFragmentPagerAdapter;
+import com.mes.android.gson.MainData;
 import com.mes.android.util.ResponseData;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.ksoap2.serialization.SoapObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private UserLoginTask mAuthTask = null;
+    private LoadDataTask mAuthTask = null;
     private String serverAddress = "";
     private View mProgressView;
     private View mZhuTiFormView;
@@ -50,33 +54,57 @@ public class MainActivity extends AppCompatActivity {
 //        mUserId=getIntent().getStringExtra("bh");
 //        mUserName=getIntent().getStringExtra("name");
 //        mJueSeId=getIntent().getStringExtra("jueseid");
-        mUserId = getIntent().getStringExtra("bh");
-        mUserName = getIntent().getStringExtra("name");
-        mJueSeId = getIntent().getStringExtra("jueseid");
-        this.setTitle("卢君华");
+        mUserId = "01";
+        mUserName = "卢君华";
+        mJueSeId = "3";
+        this.setTitle(mUserName);
 
         mZhuTiFormView = findViewById(R.id.ll_main_zhuti);
         mProgressView = findViewById(R.id.pb_main_progress);
-
+        String commd = "[{\"name\":\"userId\",\"value\":\"01\"}]";
         showProgress(true);
-        mAuthTask = new UserLoginTask("Get_JueSePage", "01");
+        mAuthTask = new LoadDataTask("Get_JueSePage", commd);
         mAuthTask.execute((Void) null);
+    }
 
+    /**
+     * 加载对应的角色权限界面
+     *
+     * @param mData
+     */
+    private void loadPage(String mData) {
+        Gson gson = new Gson();
+        List<MainData> mainDatas = gson.fromJson(mData, new TypeToken<List<MainData>>() {
+        }.getType());
 
-        HomeFragment homeFragment = new HomeFragment();//初始化首页
-        List<Fragment> fragmentList = new ArrayList<>();//创建Fragment碎片List
-        fragmentList.add(homeFragment);//把碎片添加到List
+        if (mainDatas.size() > 0) {
+            List<Fragment> fragmentList = new ArrayList<>();//创建Fragment碎片List
+            List<String> titles = new ArrayList<>();
+            for (MainData md : mainDatas) {
+                if (md.mc.equals("首页")) {
+                    titles.add(md.mc);
+                    HomeFragment homeFragment = new HomeFragment();//初始化首页
+                    //为碎片传值
+                    Bundle bdl = new Bundle();
+                    bdl.putString("shuid", md.shuid);
+                    bdl.putString("jueseid", mJueSeId);
+                    homeFragment.setArguments(bdl);
+                    fragmentList.add(homeFragment);//把碎片添加到List
+                }
+            }
 
-        String[] titles = new String[]{"首页"};//初始货TabLayout标签文字
+            if (titles.size() > 0) {
+                ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+                MainFragmentPagerAdapter adapter = new MainFragmentPagerAdapter(getSupportFragmentManager(), fragmentList, titles);
+                viewPager.setAdapter(adapter);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        MainFragmentPagerAdapter adapter = new MainFragmentPagerAdapter(getSupportFragmentManager(), fragmentList, titles);
-        viewPager.setAdapter(adapter);
+                TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+                tabLayout.setupWithViewPager(viewPager);
+            }
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);
-
-
+        } else {
+            Toast.makeText(MainActivity.this, "没有获取到权限", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -115,14 +143,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*
-    验证登陆信息
+    /**
+     * 异步加载数据
      */
-    private class UserLoginTask extends AsyncTask<Void, Void, String> {
+    private class LoadDataTask extends AsyncTask<Void, Void, String> {
         private final String mMethodName;
         private final String mComm;
 
-        UserLoginTask(String methodName, String commParameter) {
+        LoadDataTask(String methodName, String commParameter) {
             mMethodName = methodName;
             mComm = commParameter;
         }
@@ -138,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
                 ResponseData rd = new ResponseData(mMethodName, mComm);
                 SoapObject soapObject = rd.LoadResult();
                 String result = soapObject == null ? "网络连接失败!" : soapObject.getProperty(0).toString();
-                Log.d("loginactivity", result);
+//                Log.d("loginactivity", result);
                 return result;
             } catch (Exception e) {
 
@@ -155,8 +183,8 @@ public class MainActivity extends AppCompatActivity {
             if (success.indexOf("{") != -1) {
                 //i添加在历史帐号信息
                 try {
-                    Log.d("MainActivity",success);
-
+                    loadPage(success);
+//Log.d("MainActivity",success);
 //                    JSONArray jsonArray = new JSONArray(success);
 //                    JSONObject jsonObject = jsonArray.getJSONObject(0);//
 //                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);

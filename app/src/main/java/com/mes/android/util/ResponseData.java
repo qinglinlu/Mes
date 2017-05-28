@@ -44,10 +44,10 @@ public class ResponseData implements ISoapService {
         MethodName = command;
         SOAP_ACTION = NameSpace + "/MesService/" + command;
 
-        Log.d("loginactivity","服务器地址："+serverAdress);
-        Log.d("loginactivity","网址："+URL);
-        Log.d("loginactivity","方法名称："+MethodName);
-        Log.d("loginactivity","ACTION:"+SOAP_ACTION);
+//        Log.d("loginactivity","服务器地址："+serverAdress);
+//        Log.d("loginactivity","网址："+URL);
+//        Log.d("loginactivity","方法名称："+MethodName);
+//        Log.d("loginactivity","ACTION:"+SOAP_ACTION);
 
     }
 
