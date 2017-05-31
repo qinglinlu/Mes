@@ -3,6 +3,7 @@ package com.mes.android;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mes.android.adapter.CaiWuPageAdapter;
+import com.mes.android.caiwu.CaiWu_HuiKuan;
 import com.mes.android.gson.QuanXianData;
 import com.mes.android.util.BaseFragment;
 import com.mes.android.util.ResponseData;
@@ -61,7 +63,8 @@ public class CaiWuFragment extends BaseFragment {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 if(homeDatas.get(groupPosition).qx.size()==0){
-                    Toast.makeText(getContext(),homeDatas.get(groupPosition).mc, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(),homeDatas.get(groupPosition).mc, Toast.LENGTH_SHORT).show();
+                    loadwindow(homeDatas.get(groupPosition).shuid,homeDatas.get(groupPosition).mc);
                     return true;
                 }else
                 {
@@ -74,13 +77,24 @@ public class CaiWuFragment extends BaseFragment {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view,
                                         int parentPos, int childPos, long l) {
-                Toast.makeText(getContext(),homeDatas.get(parentPos).qx.get(childPos).qxmc, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(),homeDatas.get(parentPos).qx.get(childPos).qxmc, Toast.LENGTH_SHORT).show();
+                loadwindow(homeDatas.get(parentPos).qx.get(childPos).qxshuid,homeDatas.get(parentPos).qx.get(childPos).qxmc);
                 return true;
             }
         });
         return view;
     }
-    protected void initData(String jsonString)
+    private void loadwindow(String shuid,String mingcheng){
+        Intent intent;
+        if(mingcheng.equals("回款管理")){
+            intent=new Intent(getContext(), CaiWu_HuiKuan.class);
+            intent.putExtra("shuid",shuid);
+            intent.putExtra("jueseid",mJueseid);
+            intent.putExtra("mc",mingcheng);
+            startActivity(intent);
+        }
+    }
+    private void initData(String jsonString)
     {
         Log.d("Caiwu",jsonString);
         Gson gson = new Gson();
