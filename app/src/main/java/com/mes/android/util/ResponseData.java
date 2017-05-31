@@ -34,12 +34,12 @@ public class ResponseData implements ISoapService {
     private String canshu;
     private Context context;
 
-    public ResponseData(String command,String parm) {
-        this.context=MyApplication.getContext();
+    public ResponseData(String command, String parm) {
+        this.context = MyApplication.getContext();
         this.command = command;
         this.canshu = parm;
         //初始化Wcf参数
-        serverAdress=getServerAddress();
+        serverAdress = getServerAddress();
         URL = serverAdress + "Service1.svc";
         MethodName = command;
         SOAP_ACTION = NameSpace + "/MesService/" + command;
@@ -52,7 +52,7 @@ public class ResponseData implements ISoapService {
     }
 
     private String getServerAddress() {
-        SharedPreferences pref =context.getSharedPreferences("server",Context.MODE_PRIVATE);
+        SharedPreferences pref = context.getSharedPreferences("server", Context.MODE_PRIVATE);
         return pref.getString("serveraddress", "");
     }
 
@@ -60,15 +60,15 @@ public class ResponseData implements ISoapService {
     public SoapObject LoadResult() {
 
         SoapObject soapObject = new SoapObject(NameSpace, MethodName);
-        try{
-            JSONArray jsonArray=new JSONArray(canshu);
-            for(int i=0;i<jsonArray.length();i++){
-                JSONObject jsonObject=jsonArray.getJSONObject(i);
+        try {
+            JSONArray jsonArray = new JSONArray(canshu);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
 //                Log.d("loginactivity",jsonObject.getString("name"));
 //                Log.d("loginactivity",jsonObject.getString("value"));
-                soapObject.addProperty(jsonObject.getString("name"),jsonObject.getString("value"));//传参，记住参数名必须和WCF方法中的参数名一致
+                soapObject.addProperty(jsonObject.getString("name"), jsonObject.getString("value"));//传参，记住参数名必须和WCF方法中的参数名一致
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -82,15 +82,15 @@ public class ResponseData implements ISoapService {
 
         try {
             trans.call(SOAP_ACTION, envelope);
-            System.out.println("Call Successful!");
+//            Log.d("Response","执行完成");
+//            System.out.println("Call Successful!");
         } catch (IOException e) {
-            System.out.println("IOException");
+            Log.d("Response", "有错误发生，IOException:" + e.getMessage());
             e.printStackTrace();
         } catch (XmlPullParserException e) {
-            System.out.println("XmlPullParserException");
+            Log.d("Response", "有错误发生，XmlPullParserException:" + e.getMessage());
             e.printStackTrace();
         }
-
         SoapObject result = (SoapObject) envelope.bodyIn;
 
         return result;

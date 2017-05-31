@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.dyhdyh.widget.loading.bar.LoadingBar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mes.android.adapter.MainFragmentPagerAdapter;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
      * @param mData
      */
     private void loadPage(String mData) {
+        LoadingBar.make(mZhuTiFormView).show();
         Gson gson = new Gson();
         List<MainData> mainDatas = gson.fromJson(mData, new TypeToken<List<MainData>>() {
         }.getType());
@@ -81,15 +83,25 @@ public class MainActivity extends AppCompatActivity {
             List<Fragment> fragmentList = new ArrayList<>();//创建Fragment碎片List
             List<String> titles = new ArrayList<>();
             for (MainData md : mainDatas) {
-                if (md.mc.equals("首页")) {
+//                if (md.mc.equals("首页")) {
+//                    titles.add(md.mc);
+//                    HomeFragment homeFragment = new HomeFragment();//初始化首页
+//                    //为碎片传值
+//                    Bundle bdl = new Bundle();
+//                    bdl.putString("shuid", md.shuid);
+//                    bdl.putString("jueseid", mJueSeId);
+//                    homeFragment.setArguments(bdl);
+//                    fragmentList.add(homeFragment);//把碎片添加到List
+//                }
+                if (md.mc.equals("财务")) {
                     titles.add(md.mc);
-                    HomeFragment homeFragment = new HomeFragment();//初始化首页
+                    CaiWuFragment caiWuFragment = new CaiWuFragment();//初始化首页
                     //为碎片传值
                     Bundle bdl = new Bundle();
                     bdl.putString("shuid", md.shuid);
                     bdl.putString("jueseid", mJueSeId);
-                    homeFragment.setArguments(bdl);
-                    fragmentList.add(homeFragment);//把碎片添加到List
+                    caiWuFragment.setArguments(bdl);
+                    fragmentList.add(caiWuFragment);//把碎片添加到List
                 }
             }
 
@@ -105,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(MainActivity.this, "没有获取到权限", Toast.LENGTH_SHORT).show();
         }
+        LoadingBar.cancel(mZhuTiFormView);
     }
 
     /**

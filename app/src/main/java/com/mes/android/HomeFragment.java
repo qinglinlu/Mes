@@ -56,10 +56,10 @@ private String mJueseid;
         mRecyclerView.setLayoutManager(layoutManager);
 
 
-        String commd = "[{\"name\":\"tj\",\"value\":\"199,'[jueseid]=''" + mJueseid + "'' and [shuid]=''"+ mShuid + "'''\"}]";
-        showProgress(true);
-        mAuthTask = new LoadDataTask("Get_Data", commd);
-        mAuthTask.execute((Void) null);
+//        String commd = "[{\"name\":\"tj\",\"value\":\"199,'[jueseid]=''" + mJueseid + "'' and [shuid]=''"+ mShuid + "'''\"}]";
+//        showProgress(true);
+//        mAuthTask = new LoadDataTask("Get_Data", commd);
+//        mAuthTask.execute((Void) null);
 
         return view;
     }
@@ -69,17 +69,9 @@ private String mJueseid;
         Gson gson = new Gson();
         List<HomeData> homeDatas = gson.fromJson(jsonString, new TypeToken<List<HomeData>>() {
         }.getType());
-        Log.d("Home",String.valueOf(homeDatas.size()));
+//        Log.d("Home",String.valueOf(homeDatas.size()));
 //
         mRecyclerView.setAdapter(new HomePageAdapter(homeDatas));
-//        mDatas = new ArrayList<String>();
-//        mDatas.add("客户");
-//        mDatas.add("成品");
-//        mDatas.add("缝纫");
-//        mDatas.add("半成品");
-//        mDatas.add("原料");
-//        mDatas.add("辅料");
-//        mDatas.add("余料");
     }
     /**
      * Shows the progress UI and hides the login form.
