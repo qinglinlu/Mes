@@ -22,7 +22,8 @@
         <activity
             android:name=".Setting"
             android:label="系统设置" />
-        <activity android:name=".caiwu.CaiWu_HuiKuan"></activity>
+        <activity android:name=".caiwu.CaiWu_HuiKuan" />
+        <activity android:name=".ShowData"></activity>
     </application>
 
 </manifest>
