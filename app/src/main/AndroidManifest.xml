@@ -23,7 +23,8 @@
             android:name=".Setting"
             android:label="系统设置" />
         <activity android:name=".caiwu.CaiWu_HuiKuan" />
-        <activity android:name=".ShowData"></activity>
+        <activity android:name=".ShowData" />
+        <activity android:name=".util.ListDateTime"></activity>
     </application>
 
 </manifest>

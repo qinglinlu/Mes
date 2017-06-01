@@ -1,43 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff">
+    android:background="#fff"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <EditText
+            android:id="@+id/et_caiwu_huikuan_chaxun_startdate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="datetime"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="none" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="至"/>
+            android:text="至" />
+
         <EditText
+            android:id="@+id/et_caiwu_huikuan_chaxun_enddate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="datetime"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="none" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <Button
+            android:id="@+id/bt_caiwu_huikuan_chaxun_ok"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="确定"
             android:layout_weight="1"
-            android:id="@+id/bt_caiwu_huikuan_chaxun_ok"/>
+            android:text="确定" />
+
         <Button
+            android:id="@+id/bt_caiwu_huikuan_chaxun_no"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="取消"
-            android:id="@+id/bt_caiwu_huikuan_chaxun_no"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="取消" />
+        <Button
+            android:id="@+id/bt_caiwu_huikuan_chaxun_chongzhi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="重置" />
     </LinearLayout>
 </LinearLayout>
