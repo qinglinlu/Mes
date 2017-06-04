@@ -1,22 +1,129 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.mes.android.util.ListDateTime"
-    android:weightSum="1">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
- <DatePicker
-     android:layout_width="wrap_content"
-     android:layout_height="400dp"></DatePicker>
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
+        android:layout_height="1dp"
+        android:background="#000" />
+
+    <TextView
+        android:id="@+id/tv_listdatetime_showtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:text="选择的时间是："
+        android:textSize="20sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+
+        <com.mes.android.util.PickerView
+            android:id="@+id/pv_listdatetime_nian"
+            android:layout_width="100dp"
+            android:layout_height="160dp" />
+
+
+        <com.mes.android.util.PickerView
+            android:id="@+id/pv_listdatetime_yue"
+            android:layout_width="80dp"
+            android:layout_height="160dp" />
+
+
+        <com.mes.android.util.PickerView
+            android:id="@+id/pv_listdatetime_ri"
+            android:layout_width="80dp"
+            android:layout_height="160dp" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+
+        <com.mes.android.util.PickerView
+            android:id="@+id/pv_listdatetime_shi"
+            android:layout_width="80dp"
+            android:layout_height="160dp" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="确定"/>
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:text=":"
+            android:textColor="#ffaa33"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <com.mes.android.util.PickerView
+            android:id="@+id/pv_listdatetime_fen"
+            android:layout_width="80dp"
+            android:layout_height="160dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:text=":"
+            android:textColor="#ffaa33"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <com.mes.android.util.PickerView
+            android:id="@+id/pv_listdatetime_miao"
+            android:layout_width="80dp"
+            android:layout_height="160dp" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <Button
+            android:id="@+id/bt_listdatetime_no"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="取消" />
+
+        <Button
+            android:id="@+id/bt_listdatetime_ok"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="确定" />
     </LinearLayout>
 </LinearLayout>

@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import android.widget.EditText;
 import com.mes.android.R;
 import com.mes.android.ShowData;
 import com.mes.android.util.BaseFragment;
+import com.mes.android.util.ListDateTime;
 
 import java.util.Calendar;
 
@@ -65,6 +68,7 @@ public class CaiWu_HuiKuan_ChaXun extends BaseFragment implements View.OnClickLi
     public void onClick(View v) {
         ShowData showData = (ShowData) getActivity();
         Calendar c = Calendar.getInstance();
+        Intent intent;
         dateStr = "";
         switch (v.getId()) {
             case R.id.bt_caiwu_huikuan_chaxun_ok:
@@ -76,31 +80,34 @@ public class CaiWu_HuiKuan_ChaXun extends BaseFragment implements View.OnClickLi
                 showData.process("No按钮");
                 break;
             case R.id.et_caiwu_huikuan_chaxun_startdate:
-
-                new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        // TODO Auto-generated method stub
-                        dateStr = year + "/" + (monthOfYear + 1) + "/" + dayOfMonth;
-                        startDate.setText(dateStr);
-//                        okButton.requestFocus();
-                    }
-
-                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
+                intent = new Intent(getActivity(), ListDateTime.class);
+                startActivityForResult(intent, 100);
+//
+//                new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+//
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                        // TODO Auto-generated method stub
+//                        dateStr = year + "/" + (monthOfYear + 1) + "/" + dayOfMonth;
+//                        startDate.setText(dateStr);
+////                        okButton.requestFocus();
+//                    }
+//
+//                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
 
                 break;
             case R.id.et_caiwu_huikuan_chaxun_enddate:
-
-                new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        // TODO Auto-generated method stub
-                        endDate.setText(year + "/" + (monthOfYear + 1) + "/" + dayOfMonth);
-//                        okButton.requestFocus();
-                    }
-                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
+                intent = new Intent(getActivity(), ListDateTime.class);
+                startActivityForResult(intent, 101);
+//                new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+//
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                        // TODO Auto-generated method stub
+//                        endDate.setText(year + "/" + (monthOfYear + 1) + "/" + dayOfMonth);
+////                        okButton.requestFocus();
+//                    }
+//                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
 
                 break;
             default:
@@ -108,6 +115,25 @@ public class CaiWu_HuiKuan_ChaXun extends BaseFragment implements View.OnClickLi
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 100:
+                if (resultCode == -1) {
+                    startDate.setText(data.getStringExtra("date_return"));
+                }
+                break;
+            case 101:
+                if (resultCode == -1) {
+                    endDate.setText(data.getStringExtra("date_return"));
+                }
+                break;
+            default:
+                break;
+        }
+
+    }
 //    private void ShowDatePickDailog(String l) {
 //
 //// TODO Auto-generated method stub

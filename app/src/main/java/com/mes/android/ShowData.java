@@ -1,5 +1,6 @@
 package com.mes.android;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,10 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mes.android.caiwu.CaiWu_HuiKuan_ChaXun;
+import com.mes.android.util.ListDateTime;
 
 public class ShowData extends AppCompatActivity {
     private String mJueseid;
     private String mShuid;
+    private String mMc;
     public DrawerLayout mDrawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,8 @@ public class ShowData extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         mDrawerLayout=(DrawerLayout)findViewById(R.id.dl_showdata);
-        this.setTitle(getIntent().getStringExtra("mc"));
+        mMc=getIntent().getStringExtra("mc");
+        this.setTitle(mMc);
         mJueseid=getIntent().getStringExtra("jueseid");
         mShuid=getIntent().getStringExtra("shuid");
 
@@ -46,11 +50,35 @@ public class ShowData extends AppCompatActivity {
         return true;
     }
 
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        switch (requestCode){
+//            case 100:
+//                if(resultCode==RESULT_OK){
+//                    if(mMc.equals("回款管理")){
+//                        CaiWu_HuiKuan_ChaXun.
+//                    }
+//
+////                    String returnData=data.getStringExtra("date_return");
+////                    Log.d("showdata", returnData+",result_ok"+String.valueOf(RESULT_OK));
+//                }
+//        }
+//    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_edut_search:
                 mDrawerLayout.openDrawer(GravityCompat.START);
+                break;
+            case R.id.menu_edut_add:
+                Intent intent=new Intent(ShowData.this, ListDateTime.class);
+                startActivityForResult(intent,100);
                 break;
             case android.R.id.home:
                 finish();

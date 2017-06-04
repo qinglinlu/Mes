@@ -17,7 +17,8 @@
             android:layout_weight="1"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:inputType="none" />
+            android:inputType="none"
+            android:textSize="15sp"/>
 
         <TextView
             android:layout_width="wrap_content"
