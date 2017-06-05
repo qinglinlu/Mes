@@ -24,8 +24,11 @@
             android:label="系统设置" />
         <activity android:name=".caiwu.CaiWu_HuiKuan" />
         <activity android:name=".ShowData" />
-        <activity android:name=".util.ListDateTime"
-            android:theme="@style/Base.Theme.AppCompat.Light.Dialog"></activity>
+        <activity
+            android:name=".util.ListDateTime"
+            android:theme="@style/Base.Theme.AppCompat.Light.Dialog" />
+        <activity android:name=".liebiao.List_OnlyMc"
+            android:theme="@style/Base.Theme.AppCompat.Light.Dialog" />
     </application>
 
 </manifest>

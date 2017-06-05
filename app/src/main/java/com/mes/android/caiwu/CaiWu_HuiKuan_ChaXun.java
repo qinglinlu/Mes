@@ -1,22 +1,18 @@
 package com.mes.android.caiwu;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.mes.android.R;
 import com.mes.android.ShowData;
+import com.mes.android.liebiao.List_OnlyMc;
 import com.mes.android.util.BaseFragment;
 import com.mes.android.util.ListDateTime;
 
@@ -31,6 +27,9 @@ public class CaiWu_HuiKuan_ChaXun extends BaseFragment implements View.OnClickLi
     private String dateStr;
     private EditText startDate;
     private EditText endDate;
+    private EditText yeWuLeiXingText;
+    private EditText jieSuanFangShiText;
+    private EditText keHuText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,12 +40,25 @@ public class CaiWu_HuiKuan_ChaXun extends BaseFragment implements View.OnClickLi
 
         startDate = (EditText) view.findViewById(R.id.et_caiwu_huikuan_chaxun_startdate);
         endDate = (EditText) view.findViewById(R.id.et_caiwu_huikuan_chaxun_enddate);
+        yeWuLeiXingText= (EditText) view.findViewById(R.id.et_caiwu_huikuan_chaxun_yiewuleixing);
+        jieSuanFangShiText= (EditText) view.findViewById(R.id.et_caiwu_huikuan_chaxun_jiesuanfangshi);
+        keHuText= (EditText) view.findViewById(R.id.et_caiwu_huikuan_chaxun_kehu);
+
         startDate.setInputType(InputType.TYPE_NULL);
         endDate.setInputType(InputType.TYPE_NULL);
+        yeWuLeiXingText.setInputType(InputType.TYPE_NULL);
+        jieSuanFangShiText.setInputType(InputType.TYPE_NULL);
+        keHuText.setInputType(InputType.TYPE_NULL);
+
         startDate.setOnClickListener(this);
         endDate.setOnClickListener(this);
+        yeWuLeiXingText.setOnClickListener(this);
+        jieSuanFangShiText.setOnClickListener(this);
+        keHuText.setOnClickListener(this);
         okButton.setOnClickListener(this);
         noButton.setOnClickListener(this);
+
+
         startDate.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -72,12 +84,11 @@ public class CaiWu_HuiKuan_ChaXun extends BaseFragment implements View.OnClickLi
         dateStr = "";
         switch (v.getId()) {
             case R.id.bt_caiwu_huikuan_chaxun_ok:
-//                showData.mDrawerLayout.closeDrawers();
-//                ShowDatePickDailog();
+                showData.mDrawerLayout.closeDrawers();
+                showData.process(getTiaojian());
                 break;
             case R.id.bt_caiwu_huikuan_chaxun_no:
                 showData.mDrawerLayout.closeDrawers();
-                showData.process("No按钮");
                 break;
             case R.id.et_caiwu_huikuan_chaxun_startdate:
                 intent = new Intent(getActivity(), ListDateTime.class);
@@ -99,40 +110,86 @@ public class CaiWu_HuiKuan_ChaXun extends BaseFragment implements View.OnClickLi
             case R.id.et_caiwu_huikuan_chaxun_enddate:
                 intent = new Intent(getActivity(), ListDateTime.class);
                 startActivityForResult(intent, 101);
-//                new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-//
-//                    @Override
-//                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//                        // TODO Auto-generated method stub
-//                        endDate.setText(year + "/" + (monthOfYear + 1) + "/" + dayOfMonth);
-////                        okButton.requestFocus();
-//                    }
-//                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
-
+            break;
+            case R.id.et_caiwu_huikuan_chaxun_yiewuleixing:
+                intent = new Intent(getActivity(), List_OnlyMc.class);
+                intent.putExtra("commId","111");
+                intent.putExtra("biaoti","业务类型");
+                startActivityForResult(intent, 102);
                 break;
+            case R.id.et_caiwu_huikuan_chaxun_jiesuanfangshi:
+                intent = new Intent(getActivity(), List_OnlyMc.class);
+                intent.putExtra("commId","72");
+                intent.putExtra("biaoti","结算方式");
+                startActivityForResult(intent, 103);
+                break;
+            case R.id.et_caiwu_huikuan_chaxun_kehu:
+                intent = new Intent(getActivity(), List_OnlyMc.class);
+                intent.putExtra("commId","62");
+                intent.putExtra("biaoti","客户");
+                startActivityForResult(intent, 104);
+                break;
+            case R.id.bt_caiwu_huikuan_chaxun_chongzhi:
+                chongZhiTiaoJian();
             default:
                 break;
         }
     }
 
+    private void chongZhiTiaoJian() {
+        startDate.setText("");
+        endDate.setText("");
+        yeWuLeiXingText.setText("");
+        jieSuanFangShiText.setText("");
+        keHuText.setText("");
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case 100:
-                if (resultCode == -1) {
-                    startDate.setText(data.getStringExtra("date_return"));
-                }
-                break;
-            case 101:
-                if (resultCode == -1) {
-                    endDate.setText(data.getStringExtra("date_return"));
-                }
-                break;
-            default:
-                break;
+        if (resultCode == -1 && !data.getStringExtra("date_return").isEmpty()) {
+            String returnString=data.getStringExtra("date_return");
+            switch (requestCode) {
+                case 100:
+                        startDate.setText(returnString);
+                    break;
+                case 101:
+                        endDate.setText(returnString);
+                    break;
+                case 102:
+                        yeWuLeiXingText.setText(returnString);
+                    break;
+                case 103:
+                        jieSuanFangShiText.setText(returnString);
+                    break;
+                case 104:
+                        keHuText.setText(returnString);
+                    break;
+                default:
+                    break;
+            }
         }
+    }
 
+    public String getTiaojian() {
+        String tiaojian="";
+        if(!startDate.getText().toString().isEmpty()){
+            tiaojian += " and [riqi]>='" + startDate.getText().toString() + "'";
+        }
+        if(!endDate.getText().toString().isEmpty()){
+            tiaojian += " and [riqi]<='" + endDate.getText().toString() + "'";
+        }
+        if(!jieSuanFangShiText.getText().toString().isEmpty()){
+            tiaojian += " and [jiesuanfangshi]='" +jieSuanFangShiText.getText().toString()+ "'";
+        }
+        if(!keHuText.getText().toString().isEmpty()){
+            tiaojian += " and [kehu]='" +keHuText.getText().toString() + "'";
+        }
+        if(!yeWuLeiXingText.getText().toString().isEmpty()){
+            tiaojian += " and [leixing]='" +yeWuLeiXingText.getText().toString() + "'";
+        }
+        return tiaojian.isEmpty()?"":tiaojian.substring(5);
+//        return tiaojian;
     }
 //    private void ShowDatePickDailog(String l) {
 //

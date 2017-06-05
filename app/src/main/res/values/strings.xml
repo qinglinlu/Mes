@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Mes</string>
+    <string name="button_ok">确定</string>
+    <string name="button_no">取消</string>
+    <string name="button_chaxun">查询</string>
 </resources>

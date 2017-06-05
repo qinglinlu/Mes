@@ -117,13 +117,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="取消" />
+            android:text="@string/button_no" />
 
         <Button
             android:id="@+id/bt_listdatetime_ok"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="确定" />
+            android:text="@string/button_ok" />
     </LinearLayout>
 </LinearLayout>

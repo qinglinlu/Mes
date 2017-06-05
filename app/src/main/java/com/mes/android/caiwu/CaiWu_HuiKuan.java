@@ -1,6 +1,5 @@
 package com.mes.android.caiwu;
 
-import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.mes.android.R;
-import com.mes.android.Setting;
 
 public class CaiWu_HuiKuan extends AppCompatActivity {
     private String mJueseid;
@@ -20,7 +18,7 @@ public class CaiWu_HuiKuan extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_caiwu__huikuan);
+        setContentView(R.layout.activity_caiwu_huikuan);
         Toolbar toolbar = (Toolbar) findViewById(R.id.tb_caiwuhuikuan_toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
